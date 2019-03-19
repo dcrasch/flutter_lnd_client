@@ -1,4 +1,4 @@
-# Lightning Network Client without a name
+# Lightning Network Client without a name and work in progress
 
 A Lightning Network grpc client, build with flutter. 
 You have a nice transaction overview, deposit some bitcoin and send and receive via the lightning network using a qr code.

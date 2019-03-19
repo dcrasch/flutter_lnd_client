@@ -8,6 +8,11 @@ You have a nice transaction overview, deposit some bitcoin and send and receive 
 Install a lightning network daemon go on a raspberry pi. Install the app. Copy the settings from de server. 
 And make some lightning payment to a friend https://tippin.me/@Xentagz .
 
+## Screenshots
+
+![home screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/home_screen.png)
+![transfer screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/transfers_screen.png)
+
 ## GRPC
 
 ### Installing grpc for dart

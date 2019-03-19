@@ -1,0 +1,45 @@
+name: fltld
+description: A Flutter Lightning Network Wallet App
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  intl: ">=0.14.0"
+  share : ^0.6.0
+
+  # grpc
+  grpc: ^0.6.6
+  protobuf: ^0.10.4
+
+  #bitcoin
+  bech32: any
+
+  #qrcode
+  barcode_scan: ^0.0.8
+  qr_flutter: ^2.0.0+51
+
+  #ui
+  flutter_speed_dial: ^1.0.9
+  keyboard_actions: ^1.0.3
+
+  #settings
+  flutter_secure_storage: ^3.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: LndAppIcons
+      fonts:
+        - asset: fonts/LndAppIcons.ttf
+  assets:
+    - images/party-popper.png

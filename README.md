@@ -1,11 +1,11 @@
 # Lightning Network Client without a name and work in progress
 
-A Lightning Network grpc client, build with flutter. 
+A Lightning Network grpc client, build with flutter.
 You have a nice transaction overview, deposit some bitcoin and send and receive via the lightning network using a qr code.
 
 ## Getting Started
 
-Install a lightning network daemon go on a raspberry pi. Install the app. Copy the settings from de server. 
+Install a lightning network daemon go on a raspberry pi. Install the app. Copy the settings from de server.
 And make some lightning payment to a friend https://tippin.me/@Xentagz .
 
 ## Screenshots

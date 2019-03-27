@@ -9,7 +9,7 @@ import 'package:fltld/model/lnrpc/rpc.pbgrpc.dart';
 class LightningService {
   LightningClient client;
   CallOptions callOptions;
-
+  ClientChannel _channel;
   LightningService(String host, int port, String tlscert, String macaroon) {
     final String tls = tlscert;
     final channelCredentials =
@@ -18,12 +18,12 @@ class LightningService {
     });
     final channelOptions = ChannelOptions(
         credentials: channelCredentials, idleTimeout: Duration(seconds: 30));
-    final channel = ClientChannel(
+    _channel = ClientChannel(
       host,
       port: port,
       options: channelOptions,
     );
-    client = LightningClient(channel);
+    client = LightningClient(_channel);
     callOptions = CallOptions(metadata: {'macaroon': macaroon});
   }
 

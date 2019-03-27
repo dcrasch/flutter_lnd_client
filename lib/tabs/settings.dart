@@ -5,6 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 import '../presentation/lnd_app_icons_icons.dart';
+import '../model/app_state.dart';
+import '../app_state_container.dart';
+import '../services/lnrpc_service.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsWidgetState extends State<Settings> {
+  AppState appState;
   final _storage = new FlutterSecureStorage();
   String host = ""; // move to service
   String tls = "";
@@ -63,6 +67,8 @@ class _SettingsWidgetState extends State<Settings> {
   }
 
   Widget build(BuildContext context) {
+    var container = AppStateContainer.of(context);
+    appState = container.state;
     return new Scaffold(
         body: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -99,6 +105,12 @@ class _SettingsWidgetState extends State<Settings> {
 
   Future<void> _applyChanges() async {
     await _saveAll();
+    FlutterSecureStorage _storage = new FlutterSecureStorage();
+    String h = await _storage.read(key: "host");
+    String p = await _storage.read(key: "port");
+    String t = await _storage.read(key: "tls");
+    String m = await _storage.read(key: "macaroon");
+    appState.service = LightningService(h, int.tryParse(p), t, m);
   }
 
   Future<void> _scan() async {

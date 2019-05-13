@@ -94,7 +94,15 @@ class LightningService {
           ..addIndex = Int64(add_index)
           ..settleIndex = Int64(settle_index),
         options: callOptions);
+    }
+
+    Future<SendCoinsResponse> SendCoins(String bitcoinAddress, amount) async {
+      return await client.sendCoins(SendCoinsRequest()
+        ..addr = bitcoinAddress
+        ..amount = Int64(amount), // satoshis
+        options: callOptions);
   }
+
 }
 
 /* TODO

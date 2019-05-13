@@ -7,6 +7,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fltld/dialogs/payment.dart';
 import 'package:fltld/dialogs/invoice.dart';
 import 'package:fltld/dialogs/receive.dart';
+import 'package:fltld/dialogs/send.dart';
 import '../model/transfer.dart';
 import '../presentation/lnd_app_icons_icons.dart';
 import 'transfercard.dart';
@@ -53,6 +54,19 @@ class TransfersState extends State<Transfers> {
       visible: _dialVisible,
       curve: Curves.bounceIn,
       children: [
+        SpeedDialChild(
+          child: Icon(LndAppIcons.bitcoin, color: Colors.white),
+          backgroundColor: Colors.red,
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => SendWidget()),
+            );
+          },
+          label: 'Send to Address',
+          labelStyle: TextStyle(fontWeight: FontWeight.w500),
+          labelBackgroundColor: Colors.redAccent,
+        ),
+
         SpeedDialChild(
           child: Icon(LndAppIcons.qrcode, color: Colors.white),
           backgroundColor: Colors.deepOrange,

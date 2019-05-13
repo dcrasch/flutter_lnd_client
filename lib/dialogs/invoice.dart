@@ -32,9 +32,9 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
   void initState() {
     super.initState();
     streamController.stream.listen((p) {
-        if (p.settled && p.addIndex == addIndex) {
-          setState(() => settled = true);
-        }
+      if (p.settled && p.addIndex == addIndex) {
+        setState(() => settled = true);
+      }
     });
   }
 
@@ -108,8 +108,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
       this.payreq = invoice.paymentRequest;
       this.settled = false;
       this.addIndex = invoice.addIndex;
-  });
-   await load(streamController); // mmmm
+    });
+    await load(streamController); // mmmm
   }
 
   Future<void> load(StreamController<Invoice> sc) async {

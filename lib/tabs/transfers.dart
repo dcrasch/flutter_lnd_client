@@ -66,7 +66,6 @@ class TransfersState extends State<Transfers> {
           labelStyle: TextStyle(fontWeight: FontWeight.w500),
           labelBackgroundColor: Colors.redAccent,
         ),
-
         SpeedDialChild(
           child: Icon(LndAppIcons.qrcode, color: Colors.white),
           backgroundColor: Colors.deepOrange,

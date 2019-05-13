@@ -92,7 +92,8 @@ class _SendWidgetState extends State<SendWidget> {
                   child: Column(children: <Widget>[
                 TextField(
                     focusNode: _nodeLightning,
-                    decoration: InputDecoration(hintText: 'Enter Bitcoin Address'),
+                    decoration:
+                        InputDecoration(hintText: 'Enter Bitcoin Address'),
                     controller: barcodeController),
                 FlatButton(
                   onPressed: _scan,
@@ -116,7 +117,7 @@ class _SendWidgetState extends State<SendWidget> {
     try {
       String barcode = await BarcodeScanner.scan();
       if (barcode.startsWith("bitcoin:")) {
-        barcode = barcode.substring(8,barcode.indexOf('?'));
+        barcode = barcode.substring(8, barcode.indexOf('?'));
       }
 
       this.barcodeController.text = barcode;

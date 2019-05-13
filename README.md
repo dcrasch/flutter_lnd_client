@@ -8,6 +8,15 @@ You have a nice transaction overview, deposit some bitcoin and send and receive 
 Install a lightning network daemon go on a raspberry pi. Install the app. Copy the settings from de server.
 And make some lightning payment to a friend https://tippin.me/@Xentagz .
 
+## Usage
+
+```shell
+flutter run --release
+```
+
+**RUN THE RELEASE VERSION ON YOUR PHONE!!** The debug version has remote debug enabled!
+
+
 ## Screenshots
 
 ![home screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/home_screen.png)

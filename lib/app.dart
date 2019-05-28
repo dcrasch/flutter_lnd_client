@@ -4,7 +4,8 @@ import './presentation/lnd_app_icons_icons.dart';
 
 import './tabs/home.dart' as _firstTab;
 import './tabs/transfers.dart' as _secondTab;
-import './tabs/settings.dart' as _thirdTab;
+import './tabs/channels.dart' as _thirdTab;
+import './tabs/settings.dart' as _fourthTab;
 
 import './screens/about.dart' as _aboutPage;
 import './screens/support.dart' as _supportPage;
@@ -122,7 +123,8 @@ class TabsState extends State<Tabs> {
         children: <Widget>[
           new _firstTab.Home(),
           new _secondTab.Transfers(),
-          new _thirdTab.Settings()
+          new _thirdTab.Channels(),
+          new _fourthTab.Settings()
         ],
       ),
 
@@ -214,6 +216,10 @@ class TabsState extends State<Tabs> {
       case 2:
         this._title_app = TabItems[2].title;
         break;
+
+      case 3:
+        this._title_app = TabItems[3].title;
+        break;
     }
   }
 }
@@ -227,5 +233,6 @@ class TabItem {
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Home', icon: Icons.home),
   const TabItem(title: 'Transfers', icon: LndAppIcons.flash_1),
+  const TabItem(title: 'Channels', icon: Icons.settings),
   const TabItem(title: 'Settings', icon: Icons.settings)
 ];

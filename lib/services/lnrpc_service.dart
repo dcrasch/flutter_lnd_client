@@ -103,6 +103,16 @@ class LightningService {
           ..amount = Int64(amount), // satoshis
         options: callOptions);
   }
+
+  Future<ListChannelsResponse> ListChannels() async {
+    return await client.listChannels(ListChannelsRequest(),
+        options: callOptions);
+  }
+
+  Future<NodeInfo> GetNodeInfo(String pubKey) async {
+    return await client.getNodeInfo(NodeInfoRequest()..pubKey = pubKey,
+        options: callOptions);
+  }
 }
 
 /* TODO

@@ -2,16 +2,35 @@
 
 A Lightning Network grpc client, build with flutter.
 You have a nice transaction overview, deposit some bitcoin and send and receive via the lightning network using a qr code.
+Fund and withdraw bitcoin.
 
 ## Getting Started
 
 Install a lightning network daemon go on a raspberry pi. Install the app. Copy the settings from de server.
 And make some lightning payment to a friend https://tippin.me/@Xentagz .
 
+## Usage
+
+```shell
+flutter run --release
+```
+
+**RUN THE RELEASE VERSION ON YOUR PHONE!!** The debug version has remote debug enabled!
+
+
 ## Screenshots
 
 ![home screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/home_screen.png)
 ![transfer screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/transfers_screen.png)
+
+## Features
+
+* Send Lightning Network
+* Receive Lightning Network
+* Send bitcoin network
+* Receive bitcoin network
+* Transaction overview
+* Settings
 
 ## GRPC
 
@@ -48,6 +67,10 @@ protoc --dart_out=grpc:lib/model/ -Iprotos protos/google/api/*.proto
 
 * [How to use custom icons](https://medium.com/flutterpub/how-to-use-custom-icons-in-flutter-834a079d977)
 * [Flutter Icons online tool](http://fluttericon.com/)
+
+## Other opensource lightning network clients
+
+* [Zap wallet](https://github.com/LN-Zap/zap-iOS/)
 
 ## License
 

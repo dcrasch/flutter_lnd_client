@@ -29,7 +29,8 @@ flutter run --release
 * Receive Lightning Network
 * Send bitcoin network
 * Receive bitcoin network
-* Transaction overview
+* Transactions overview
+* Channels overview
 * Settings
 
 ## GRPC

@@ -142,6 +142,8 @@ class TabsState extends State<Tabs> {
               }).toList(),
             )
           : new BottomNavigationBar(
+              selectedItemColor: Colors.blueGrey,
+              unselectedItemColor: Colors.grey,
               currentIndex: _tab,
               onTap: onTap,
               items: TabItems.map((TabItem) {

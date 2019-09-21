@@ -72,10 +72,9 @@ class LightningService {
   }
 
   Future<NewAddressResponse> NewAddress(String address_type) async {
-    var addrtype =
-        NewAddressRequest_AddressType.NESTED_PUBKEY_HASH; // compat ven
+    var addrtype = AddressType.NESTED_PUBKEY_HASH; // compat ven
     if (address_type == 'p2wkh') {
-      addrtype = NewAddressRequest_AddressType.WITNESS_PUBKEY_HASH; // bech32
+      addrtype = AddressType.WITNESS_PUBKEY_HASH; // bech32
     }
 
     return await client.newAddress(NewAddressRequest()..type = addrtype,

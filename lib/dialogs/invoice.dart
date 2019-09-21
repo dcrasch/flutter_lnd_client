@@ -30,6 +30,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
   bool settled = false;
 
   void initState() {
+    FormKeyboardActions.setKeyboardActions(context, _buildConfig(context));
     super.initState();
     streamController.stream.listen((p) {
       if (p.settled && p.addIndex == addIndex) {
@@ -45,20 +46,24 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     super.dispose();
   }
 
+  KeyboardActionsConfig _buildConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+        keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+        keyboardBarColor: Colors.grey[200],
+        nextFocus: true,
+        actions: [
+          KeyboardAction(
+            focusNode: _nodeAmount,
+          ),
+        ]);
+  }
+
   Widget build(BuildContext context) {
     var container = AppStateContainer.of(context);
     appState = container.state;
     return new Scaffold(
       appBar: new AppBar(title: new Text("Create invoice payment")),
       body: FormKeyboardActions(
-          keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-          keyboardBarColor: Colors.grey[200],
-          nextFocus: true,
-          actions: [
-            KeyboardAction(
-              focusNode: _nodeAmount,
-            ),
-          ],
           child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: SingleChildScrollView(

@@ -27,6 +27,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
 
   void initState() {
     scanerror = "";
+    FormKeyboardActions.setKeyboardActions(context, _buildConfig(context));
     super.initState();
   }
 
@@ -36,6 +37,21 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     myController.dispose();
     barcodeController.dispose();
     super.dispose();
+  }
+
+  KeyboardActionsConfig _buildConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+        keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+        keyboardBarColor: Colors.grey[200],
+        nextFocus: true,
+        actions: [
+          KeyboardAction(
+            focusNode: _nodeLightning,
+          ),
+          KeyboardAction(
+            focusNode: _nodeAmount,
+          ),
+        ]);
   }
 
   Widget _buildForm(AsyncSnapshot<String> snapshot) {
@@ -75,17 +91,6 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     return new Scaffold(
       appBar: new AppBar(title: new Text("Create new payment")),
       body: FormKeyboardActions(
-          keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-          keyboardBarColor: Colors.grey[200],
-          nextFocus: true,
-          actions: [
-            KeyboardAction(
-              focusNode: _nodeLightning,
-            ),
-            KeyboardAction(
-              focusNode: _nodeAmount,
-            ),
-          ],
           child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: SingleChildScrollView(

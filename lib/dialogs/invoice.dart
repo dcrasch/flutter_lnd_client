@@ -11,6 +11,15 @@ import 'package:fltld/model/lnrpc/rpc.pb.dart';
 import '../model/app_state.dart';
 import '../app_state_container.dart';
 
+class InvoiceDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: new Text("Create invoice payment")),
+        body: FormKeyboardActions(child: InvoiceWidget()));
+  }
+}
+
 class InvoiceWidget extends StatefulWidget {
   @override
   State<InvoiceWidget> createState() {
@@ -29,6 +38,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
   Int64 addIndex;
   bool settled = false;
 
+  @override
   void initState() {
     FormKeyboardActions.setKeyboardActions(context, _buildConfig(context));
     super.initState();
@@ -58,51 +68,48 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
         ]);
   }
 
+  @override
   Widget build(BuildContext context) {
     var container = AppStateContainer.of(context);
     appState = container.state;
-    return new Scaffold(
-      appBar: new AppBar(title: new Text("Create invoice payment")),
-      body: FormKeyboardActions(
-          child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                  child: Column(children: <Widget>[
-                TextField(
-                    keyboardType: TextInputType.number,
-                    focusNode: _nodeAmount,
-                    decoration:
-                        InputDecoration(hintText: 'Enter satoshi amount'),
-                    controller: amountController),
-                FlatButton(
-                    onPressed: _addInvoice,
-                    color: Theme.of(context).primaryColor,
-                    child: Text(
-                      "Generate Invoice QR",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                payreq.isNotEmpty && !settled
-                    ? Column(children: <Widget>[
-                        QrImage(data: payreq, size: 400.0, version: 11),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              new GestureDetector(
-                                child: new Text(payreq),
-                                onLongPress: () {
-                                  Share.share(payreq);
-                                },
-                              ),
-                            ]),
-                      ])
-                    : Container(),
-                settled
-                    ? Column(children: <Widget>[
-                        Image.asset('images/party-popper.png'),
-                        Text("Got it, invoice settled")
-                      ])
-                    : Text("Not settled"),
-              ])))),
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: SingleChildScrollView(
+          child: Column(children: <Widget>[
+        TextField(
+            keyboardType: TextInputType.number,
+            focusNode: _nodeAmount,
+            decoration: InputDecoration(hintText: 'Enter satoshi amount'),
+            controller: amountController),
+        FlatButton(
+            onPressed: _addInvoice,
+            color: Theme.of(context).primaryColor,
+            child: Text(
+              "Generate Invoice QR",
+              style: TextStyle(color: Colors.white),
+            )),
+        payreq.isNotEmpty && !settled
+            ? Column(children: <Widget>[
+                QrImage(data: payreq, size: 400.0, version: 11),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new GestureDetector(
+                        child: new Text(payreq),
+                        onLongPress: () {
+                          Share.share(payreq);
+                        },
+                      ),
+                    ]),
+              ])
+            : Container(),
+        settled
+            ? Column(children: <Widget>[
+                Image.asset('images/party-popper.png'),
+                Text("Got it, invoice settled")
+              ])
+            : Text("Not settled"),
+      ])),
     );
   }
 

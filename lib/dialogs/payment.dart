@@ -9,6 +9,15 @@ import '../presentation/lnd_app_icons_icons.dart';
 import '../model/app_state.dart';
 import '../app_state_container.dart';
 
+class PaymentDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: new Text("Create new payment")),
+        body: FormKeyboardActions(child: PaymentWidget()));
+  }
+}
+
 class PaymentWidget extends StatefulWidget {
   @override
   State<PaymentWidget> createState() {
@@ -25,6 +34,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   FocusNode _nodeLightning = FocusNode();
   FocusNode _nodeAmount = FocusNode();
 
+  @override
   void initState() {
     scanerror = "";
     FormKeyboardActions.setKeyboardActions(context, _buildConfig(context));
@@ -88,32 +98,27 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   Widget build(BuildContext context) {
     var container = AppStateContainer.of(context);
     appState = container.state;
-    return new Scaffold(
-      appBar: new AppBar(title: new Text("Create new payment")),
-      body: FormKeyboardActions(
-          child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                  child: Column(children: <Widget>[
-                TextField(
-                    focusNode: _nodeLightning,
-                    decoration: InputDecoration(hintText: 'Enter Lightning'),
-                    controller: barcodeController),
-                FlatButton(
-                  onPressed: _scan,
-                  color: Theme.of(context).primaryColor,
-                  child: Icon(LndAppIcons.qrcode, color: Colors.white),
-                ),
-                scanerror.isNotEmpty ? Text("Error: $scanerror") : Container(),
-                TextField(
-                    keyboardType: TextInputType.number,
-                    focusNode: _nodeAmount,
-                    decoration:
-                        InputDecoration(hintText: 'Enter satoshi amount'),
-                    controller: myController),
-                futureWidget(),
-              ])))),
-    );
+    return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: SingleChildScrollView(
+            child: Column(children: <Widget>[
+          TextField(
+              focusNode: _nodeLightning,
+              decoration: InputDecoration(hintText: 'Enter Lightning'),
+              controller: barcodeController),
+          FlatButton(
+            onPressed: _scan,
+            color: Theme.of(context).primaryColor,
+            child: Icon(LndAppIcons.qrcode, color: Colors.white),
+          ),
+          scanerror.isNotEmpty ? Text("Error: $scanerror") : Container(),
+          TextField(
+              keyboardType: TextInputType.number,
+              focusNode: _nodeAmount,
+              decoration: InputDecoration(hintText: 'Enter satoshi amount'),
+              controller: myController),
+          futureWidget(),
+        ])));
   }
 
   Future<void> _scan() async {

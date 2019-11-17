@@ -5,6 +5,15 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../model/app_state.dart';
 import '../app_state_container.dart';
 
+class ReceiveDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: new Text("Create new address")),
+        body: ReceiveWidget());
+  }
+}
+
 class ReceiveWidget extends StatefulWidget {
   @override
   State<ReceiveWidget> createState() {
@@ -25,32 +34,30 @@ class _ReceiveWidgetState extends State<ReceiveWidget> {
   Widget build(BuildContext context) {
     var container = AppStateContainer.of(context);
     appState = container.state;
-    return new Scaffold(
-        appBar: new AppBar(title: new Text("Create new address")),
-        body: Column(children: <Widget>[
-          FlatButton(
-              onPressed: _newAddress,
-              color: Theme.of(context).primaryColor,
-              child: Text(
-                "Generate Address QR",
-                style: TextStyle(color: Colors.white),
-              )),
-          newaddress.isNotEmpty
-              ? Column(children: <Widget>[
-                  QrImage(data: newaddress, size: 400.0, version: 11),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new GestureDetector(
-                          child: new Text(newaddress),
-                          onLongPress: () {
-                            Share.share(newaddress);
-                          },
-                        ),
-                      ]),
-                ])
-              : Container(),
-        ]));
+    return Column(children: <Widget>[
+      FlatButton(
+          onPressed: _newAddress,
+          color: Theme.of(context).primaryColor,
+          child: Text(
+            "Generate Address QR",
+            style: TextStyle(color: Colors.white),
+          )),
+      newaddress.isNotEmpty
+          ? Column(children: <Widget>[
+              QrImage(data: newaddress, size: 400.0, version: 11),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new GestureDetector(
+                      child: new Text(newaddress),
+                      onLongPress: () {
+                        Share.share(newaddress);
+                      },
+                    ),
+                  ]),
+            ])
+          : Container(),
+    ]);
   }
 
   Future<void> _newAddress() async {

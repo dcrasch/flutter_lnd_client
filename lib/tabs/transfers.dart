@@ -59,7 +59,7 @@ class TransfersState extends State<Transfers> {
           backgroundColor: Colors.red,
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SendWidget()),
+              MaterialPageRoute(builder: (context) => SendDialog()),
             );
           },
           label: 'Send to Address',
@@ -71,7 +71,7 @@ class TransfersState extends State<Transfers> {
           backgroundColor: Colors.deepOrange,
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => ReceiveWidget()),
+              MaterialPageRoute(builder: (context) => ReceiveDialog()),
             );
           },
           label: 'Receive to Address',
@@ -83,7 +83,7 @@ class TransfersState extends State<Transfers> {
           backgroundColor: Colors.green,
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => InvoiceWidget()),
+              MaterialPageRoute(builder: (context) => InvoiceDialog()),
             );
           },
           label: 'New Invoice',
@@ -95,7 +95,7 @@ class TransfersState extends State<Transfers> {
           backgroundColor: Colors.blue,
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => PaymentWidget()),
+              MaterialPageRoute(builder: (context) => PaymentDialog()),
             );
           },
           label: 'New Payment',

@@ -62,13 +62,17 @@ class LightningService {
   }
 
   Future<ListPaymentsResponse> ListPayments() async {
-    return await client.listPayments(ListPaymentsRequest(),
+    return await client.listPayments(
+      ListPaymentsRequest()
+        ..reversed=true,
         options: callOptions);
   }
 
   Future<ListInvoiceResponse> ListInvoices() async {
-    return await client.listInvoices(ListInvoiceRequest(),
-        options: callOptions);
+    return await client.listInvoices(
+      ListInvoiceRequest()
+        ..reversed=true,
+      options: callOptions);
   }
 
   Future<NewAddressResponse> NewAddress(String address_type) async {

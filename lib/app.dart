@@ -167,7 +167,7 @@ class TabsState extends State<Tabs> {
               ),
               child: new Center(
                 child: new FlutterLogo(
-                  colors: Colors.blueGrey,
+                  //colors: Colors.blueGrey,
                   size: 54.0,
                 ),
               ),

@@ -41,9 +41,12 @@ class LightningService {
         options: callOptions);
   }
 
-  Future<AddInvoiceResponse> AddInvoice(amount) async {
+  Future<AddInvoiceResponse> AddInvoice(amount, description) async {
     // TODO fix int64
-    return await client.addInvoice(Invoice()..value = Int64(amount),
+    return await client.addInvoice(
+        Invoice()
+          ..value = Int64(amount)
+          ..memo = description,
         options: callOptions);
   }
 
@@ -62,17 +65,13 @@ class LightningService {
   }
 
   Future<ListPaymentsResponse> ListPayments() async {
-    return await client.listPayments(
-      ListPaymentsRequest()
-        ..reversed=true,
+    return await client.listPayments(ListPaymentsRequest()..reversed = true,
         options: callOptions);
   }
 
   Future<ListInvoiceResponse> ListInvoices() async {
-    return await client.listInvoices(
-      ListInvoiceRequest()
-        ..reversed=true,
-      options: callOptions);
+    return await client.listInvoices(ListInvoiceRequest()..reversed = true,
+        options: callOptions);
   }
 
   Future<NewAddressResponse> NewAddress(String address_type) async {

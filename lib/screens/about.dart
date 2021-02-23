@@ -21,9 +21,11 @@ class About extends StatelessWidget {
         body: new PageView(
           children: <Widget>[
             new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[new Text('About page content')],
-            )
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text('Flutter Lightning Wallet.'),
+                  new Text('© 2021 David Rasch, All right Reserved.')
+                ])
           ],
         ),
       );

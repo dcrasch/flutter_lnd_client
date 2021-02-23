@@ -1,4 +1,4 @@
-package com.example.flutter_lnd_client
+package nl.cloudscripting.flutter_lnd_client
 
 import io.flutter.embedding.android.FlutterActivity
 

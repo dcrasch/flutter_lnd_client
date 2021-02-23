@@ -14,14 +14,16 @@ dependencies:
   share : ^0.6.0
 
   # grpc
-  grpc: ^2.1.2
-  protobuf: ^0.14.3
+  grpc: ^2.8.0
+  protobuf: ^1.1.0
 
   #bitcoin
   bech32: any
+  dart_lnurl:
+    path: packages/dart_lnurl
 
   #qrcode
-  barcode_scan: ^1.0.0
+  barcode_scan: ^1.0.0 ## obsolete
   qr_flutter: ^3.0.1
 
   #ui

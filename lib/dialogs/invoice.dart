@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:share/share.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:fixnum/fixnum.dart'; // for Int64
+import 'package:dart_lnurl/dart_lnurl.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 import 'package:fltld/model/lnrpc/rpc.pb.dart';
 import '../model/app_state.dart';
 import '../app_state_container.dart';
+import '../presentation/lnd_app_icons_icons.dart';
 
 class InvoiceDialog extends StatelessWidget {
   @override
@@ -33,10 +37,14 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
   final amountController = TextEditingController();
   FocusNode _nodeAmount = FocusNode();
   String amount;
-  String description = "Dave App Payment";
+  String description = "";
   String payreq = "";
   Int64 addIndex;
   bool settled = false;
+  String callback;
+  String k1;
+  final descriptionController = TextEditingController();
+  String scanerror = "";
 
   @override
   void initState() {
@@ -47,6 +55,9 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
         setState(() => settled = true);
       }
     });
+    this.scanerror = "";
+    this.callback = "";
+    this.k1 = "";
   }
 
   @override
@@ -81,13 +92,30 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
             focusNode: _nodeAmount,
             decoration: InputDecoration(hintText: 'Enter satoshi amount'),
             controller: amountController),
+        TextField(
+            decoration: InputDecoration(hintText: 'Enter description'),
+            controller: descriptionController),
         FlatButton(
-            onPressed: _addInvoice,
-            color: Theme.of(context).primaryColor,
-            child: Text(
-              "Generate Invoice QR",
-              style: TextStyle(color: Colors.white),
-            )),
+          onPressed: _scan,
+          color: Theme.of(context).primaryColor,
+          child: Icon(LndAppIcons.qrcode, color: Colors.white),
+        ),
+        scanerror.isNotEmpty ? Text("Error: $scanerror") : Container(),
+        callback.isEmpty
+            ? FlatButton(
+                onPressed: _addInvoice,
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  "Generate Invoice QR",
+                  style: TextStyle(color: Colors.white),
+                ))
+            : FlatButton(
+                onPressed: _sendInvoice,
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  "Send Invoice",
+                  style: TextStyle(color: Colors.white),
+                )),
         payreq.isNotEmpty && !settled
             ? Column(children: <Widget>[
                 QrImage(data: payreq, size: 400.0, version: 11),
@@ -113,9 +141,72 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     );
   }
 
+  Future<void> _scan() async {
+    try {
+      String encodedUrl = await BarcodeScanner.scan();
+      debugPrint(encodedUrl);
+      var parseresult = await getParams(encodedUrl);
+/*
+      debugPrint(parseresult.error.status);
+      debugPrint(parseresult.error.reason);
+      debugPrint(parseresult.error.domain);
+      debugPrint(parseresult.error.url);
+  */
+
+      var decodedUri = parseresult.withdrawalParams.callback;
+      var amount = parseresult.withdrawalParams.maxWithdrawable ~/
+          1000; // withdrawable is in msat
+      debugPrint(amount.toString());
+      setState(() {
+        this.amountController.text = amount.toString();
+        this.callback = decodedUri;
+        this.k1 = parseresult.withdrawalParams.k1;
+      });
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          this.scanerror = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() => this.scanerror = 'Unknown error: $e');
+      }
+    } catch (e) {
+      setState(() => this.scanerror = 'Unknown error: $e');
+    }
+  }
+
+  Future<void> _sendInvoice() async {
+    var amount = int.parse(amountController.text);
+    var description = descriptionController.text;
+    debugPrint(amount.toString());
+    var invoice = await appState.service.AddInvoice(amount, description);
+    var pr = invoice.paymentRequest;
+    setState(() {
+      this.payreq = invoice.paymentRequest;
+      this.settled = false;
+      this.addIndex = invoice.addIndex;
+    });
+    // do check if settled
+
+// reencode the url
+    var url = this.callback;
+    if (url.contains("?")) {
+      url = url + "&pr=" + pr + "&k1=" + k1;
+    } else {
+      url = url + "?pr=" + pr + "&k1=" + k1;
+    }
+    debugPrint(url);
+    final res = await http.get(url);
+    if (res.statusCode >= 300) {
+      throw res.body;
+    }
+    await load(streamController); // mmmm
+  }
+
   Future<void> _addInvoice() async {
     var amount = int.parse(amountController.text);
-    var invoice = await appState.service.AddInvoice(amount);
+    var description = descriptionController.text;
+    var invoice = await appState.service.AddInvoice(amount, description);
     setState(() {
       this.payreq = invoice.paymentRequest;
       this.settled = false;
@@ -125,7 +216,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
   }
 
   Future<void> load(StreamController<Invoice> sc) async {
-    debugPrint(sc.stream.toString());
+    //debugPrint(sc.stream.toString());
     if (sc.stream != null) {
       var streamedInvoices = appState.service.SubscribeInvoices();
       sc.addStream(streamedInvoices);

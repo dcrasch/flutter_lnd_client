@@ -20,8 +20,9 @@ flutter run --release
 
 ## Screenshots
 
+Looks ugly :-(
+
 ![home screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/home_screen.png)
-![transfer screen](https://raw.githubusercontent.com/dcrasch/flutter_lnd_client/master/screenshots/transfers_screen.png)
 
 ## Features
 
